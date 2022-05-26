@@ -6,9 +6,9 @@ from analogio import AnalogIn
 
 inputPin = AnalogIn(board.A1)
 
-THRESHOLD = 2000
-DELAY_SECONDS = 0.01
-TOTAL_RECORD_TIME = 2.0
+THRESHOLD = 1400
+DELAY_SECONDS = 0.005
+TOTAL_RECORD_TIME = 5000.0
 elapsedTime = 0.0
 oldTime = time.monotonic()
 data = []
