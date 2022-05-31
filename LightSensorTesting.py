@@ -1,22 +1,26 @@
+import time
 import board
-import analogio
+from analogio import AnalogIn
 
+DELAY_SECONDS = 0.05
+TOTAL_RECORD_TIME = 6.0
+elapsedTime = 0.0
+oldTime = time.monotonic()
+data = []
 
-# Set Up light Sensor
-light = analogio.AnalogIn(board.LIGHT)
+# Connect an analog sensor to the A1 port of the board you are using. This means a 3V, GND, and signal pin must all be connected.
+analog_in = AnalogIn(board.A1)
 
-SAMPLE_PERIOD = 0.001 # seconds
-SAMPLE_SIZE = 100 # number of measurements to analyze at a time
-raw_values = [0]*SAMPLE_SIZE
-
-stop_collecting = false 
-start_time = time.monotonic()
-
-while not stop_collecting:
-    current_time = time.monotonic()
+# This function turns the analog reading of the sensor (a number from 0 - 65536) to a voltage.
+def readAnalogPin():
+    return analog_in.value
     
-    # Read the raw light value from the sensor
-    raw_light = light.value
-    # Add the light value to the list of raw values
-    raw_values.append(raw_light)
-    print (raw_light)
+while (elapsedTime < TOTAL_RECORD_TIME):
+    currentTime = time.monotonic()
+    recordValue = readAnalogPin()
+    print("{0},{1}".format(elapsedTime, recordValue))
+    data.append([elapsedTime,recordValue])
+    
+    time.sleep(DELAY_SECONDS)
+    elapsedTime += currentTime - oldTime
+    oldTime = currentTime
