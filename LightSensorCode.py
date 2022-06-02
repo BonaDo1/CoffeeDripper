@@ -14,7 +14,7 @@ SAMPLE_SIZE = 100 # number of measurements to analyze at a time
 # Set up lists to use for analysis
 raw_values = [0]*SAMPLE_SIZE
 light_values = [0]*SAMPLE_SIZE
-num_transitions = -1
+num_drips = -1
 
 # This is a calibration step to figure out what threshold value to use.
 # Press the button A value when the light sensor is dark
@@ -52,7 +52,7 @@ while not stop_collecting:
         # Go through the thresholded data and change the number of transitions whenever the values go from 0 to 1.
         for i in range(len(light_values)-1):
             if(light_values[i] == 0 and light_values[i+1] == 1):
-                num_transitions += 1
+                num_drips += 1
 
         # Update the elapsed time based on how much time has gone by, and then print the data
         elapsed_time += current_time - start_time
